@@ -1,0 +1,5 @@
+.contenu-formulaire
+    {
+        display: grid;
+        gap: 15px;
+    }

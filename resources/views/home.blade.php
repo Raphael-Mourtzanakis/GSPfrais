@@ -2,6 +2,6 @@
 
 @section('content')
     <div>
-        <h1>Bienvenue dans la gestion des frais</h1>
+        <h1>Gestion des frais de déplacement</h1>
     </div>
 @endsection
