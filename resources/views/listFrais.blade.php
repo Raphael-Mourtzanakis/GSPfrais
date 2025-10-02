@@ -25,7 +25,7 @@
                 <td>{{ $ligne->anneemois }}</td>
                 <td>{{ $ligne->nbjustificatifs }}</td>
                 <td>{{ $ligne->datemodification }}</td>
-                <td>{{ $ligne->montantvalide }}</td>
+                <td>{{ $ligne->montantvalide }} €</td>
                 <td><a href="{{url("/editerFrais/".$ligne->id_frais)}}">Afficher</a></td>
             </tr>
         @endforeach

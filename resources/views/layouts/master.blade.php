@@ -32,7 +32,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <b class="nav-text">Nom Prénom</b>
+                    <b class="nav-text">{{session('visiteur')}}</b>
                     <span class="nav-sepration"></span>
                     <li class="nav-item">
                         <a class="nav-link" style="cursor: pointer;"

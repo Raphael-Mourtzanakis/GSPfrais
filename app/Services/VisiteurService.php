@@ -13,6 +13,7 @@ class VisiteurService
 
         if ($visiteur && $visiteur->pwd_visiteur == $password) {
             Session::put("id_visiteur", $visiteur->id_visiteur);
+            Session::put("visiteur", "$visiteur->prenom_visiteur $visiteur->nom_visiteur");
             return true;
         }
         return false;
