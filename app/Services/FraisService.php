@@ -6,13 +6,14 @@ use App\Models\Frais;
 
 class FraisService
 {
-    public function getListFrais() {
-        $liste = Frais::query()
+    public function getListFrais($id_visiteur) {
+        $desFrais = Frais::query()
             ->select()
+            ->where('id_visiteur', $id_visiteur)
             ->orderBy('id_frais')
         ->get();
 
-        return $liste;
+        return $desFrais;
     }
 
     public function getUnFrais($id) {

@@ -9,12 +9,22 @@ use App\Services\FraisService;
 class FraisController extends Controller {
     public function listFrais() {
         $service = new FraisService();
-        $desFrais = $service->getListFrais();
-        return view('listFrais', compact('desFrais'));
+        $id_visiteur = session("id_visiteur");
+        $desFrais = $service->getListFrais($id_visiteur);
+        if (isset($id_visiteur)) {
+            return view('listFrais', compact('desFrais'));
+        } else {
+            return redirect("/");
+        }
     }
     public function addFrais() {
         $unFrais =  new Frais();
-        return view('formFrais', compact('unFrais'));
+        $id_visiteur = session("id_visiteur");
+        if (isset($id_visiteur)) {
+            return view('formFrais', compact('unFrais'));
+        } else {
+            return redirect("/");
+        }
     }
 
     public function validFrais(Request $request) {
