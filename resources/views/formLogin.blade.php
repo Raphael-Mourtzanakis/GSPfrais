@@ -35,5 +35,10 @@
                 </div>
             </div>
         </form>
+        @if (isset($erreur))
+            <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
+                {{$erreur}}
+            </div>
+        @endif
     </div>
 @endsection
