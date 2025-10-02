@@ -7,12 +7,19 @@ use Illuminate\Support\Facades\Session;
 
 class VisiteurService
 {
-    public function signIn($login, $password)
-    {
+    public function signIn($login, $password) {
         $visiteur = Visiteur::query()->where("login_visiteur", "=", $login)->first();
 
         if ($visiteur && $visiteur->pwd_visiteur == $password) {
             Session::put("id_visiteur", $visiteur->id_visiteur);
+            return true;
+        }
+        return false;
+    }
+
+    public function signOut() {
+        if ($_SESSION["id_visiteur"] =! "") {
+            Session::put("id_visiteur", "");
             return true;
         }
         return false;

@@ -9,3 +9,4 @@ Route::get('/', function () {
 
 Route::get('/connecter', [VisiteurController::class, 'login']);
 Route::post('/authentifier', [VisiteurController::class, 'auth']);
+Route::get('/deconnecter', [VisiteurController::class, 'logout']);
