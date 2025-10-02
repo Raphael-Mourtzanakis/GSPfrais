@@ -32,7 +32,16 @@
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/deconnecter') }}">Se déconnecter</a>
+                        <a class="nav-link" style="cursor: pointer;"
+                           onclick="
+                           if (confirm ('Êtes vous sûr de vouloir vous déconnecter ?')) {
+                               window.location='{{ url('/deconnecter') }}';
+                           } else {
+                               window.location='{{ url('/') }}';
+                           }"
+                        >
+                           Se déconnecter
+                        </a>
                     </li>
                 </ul>
 

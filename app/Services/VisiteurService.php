@@ -18,8 +18,8 @@ class VisiteurService
     }
 
     public function signOut() {
-        if ($_SESSION["id_visiteur"] =! "") {
-            Session::put("id_visiteur", "");
+        if (session("id_visiteur")) {
+            Session::remove("id_visiteur");
             return true;
         }
         return false;
