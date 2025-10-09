@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Frais;
+use App\Models\Etat;
 use Illuminate\Http\Request;
 use App\Services\FraisService;
 
@@ -24,9 +25,11 @@ class FraisController extends Controller {
     public function addFrais() {
         try {
             $unFrais = new Frais();
+            $service = new FraisService();
+            $etats = $service->getListEtat();
             $id_visiteur = session("id_visiteur");
             if (isset($id_visiteur)) {
-                return view('formFrais', compact('unFrais'));
+                return view('formFrais', compact('unFrais', 'etats'));
             } else {
                 return redirect("/");
             }
@@ -62,9 +65,10 @@ class FraisController extends Controller {
     public function editFrais($id) {
         try {
             $service = new FraisService();
+            $etats = $service->getListEtat();
             $unFrais = $service->getUnFrais($id);
 
-            return view('formFrais', compact('unFrais'));
+            return view('formFrais', compact('unFrais', 'etats'));
         } catch (Exception $exception) {
             return view('error', compact('exception'));
         }
