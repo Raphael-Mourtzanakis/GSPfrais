@@ -10,7 +10,7 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>ID des États</th>
+            <th>États</th>
             <th>Années-Mois</th>
             <th>Nombre de justificatifs</th>
             <th>Dates de modification</th>
@@ -21,7 +21,7 @@
         <tbody>
         @foreach($desFrais as $ligne)
             <tr>
-                <td>{{ $ligne->id_etat }}</td>
+                <td>{{ $ligne->lib_etat }}</td>
                 <td>{{ $ligne->anneemois }}</td>
                 <td>{{ $ligne->nbjustificatifs }}</td>
                 <td>{{ $ligne->datemodification }}</td>

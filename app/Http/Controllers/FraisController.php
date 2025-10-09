@@ -32,14 +32,14 @@ class FraisController extends Controller {
         $service = new FraisService();
         if ($id) {
             $unFrais = $service->getUnFrais($id);
+            $unFrais->datemodification = today(); // Définir la date au moment de la modification
         } else {
             $unFrais = new Frais();
         }
-        $unFrais->id_etat = $request->input("id-etat");
+        $unFrais->id_etat = $request->input("etat");
         $unFrais->anneemois = $request->input("annee-mois");
-        $unFrais->id_visiteur = $request->input("id-visiteur");
+        $unFrais->id_visiteur = session("id_visiteur");
         $unFrais->nbjustificatifs = $request->input("nb-justificatifs");
-        $unFrais->datemodification = $request->input("date-modification");
         $unFrais->montantvalide = $request->input("montant-validé");
 
         $service->saveUnFrais($unFrais);
