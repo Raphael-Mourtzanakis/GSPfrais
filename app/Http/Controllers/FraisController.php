@@ -8,49 +8,65 @@ use App\Services\FraisService;
 
 class FraisController extends Controller {
     public function listFrais() {
-        $service = new FraisService();
-        $id_visiteur = session("id_visiteur");
-        $desFrais = $service->getListFrais($id_visiteur);
-        if (isset($id_visiteur)) {
-            return view('listFrais', compact('desFrais'));
-        } else {
-            return redirect("/");
+        try {
+            $service = new FraisService();
+            $id_visiteur = session("id_visiteur");
+            $desFrais = $service->getListFrais($id_visiteur);
+            if (isset($id_visiteur)) {
+                return view('listFrais', compact('desFrais'));
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception $exception) {
+            return view('error', compact('exception'));
         }
     }
     public function addFrais() {
-        $unFrais =  new Frais();
-        $id_visiteur = session("id_visiteur");
-        if (isset($id_visiteur)) {
-            return view('formFrais', compact('unFrais'));
-        } else {
-            return redirect("/");
+        try {
+            $unFrais = new Frais();
+            $id_visiteur = session("id_visiteur");
+            if (isset($id_visiteur)) {
+                return view('formFrais', compact('unFrais'));
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception $exception) {
+            return view('error', compact('exception'));
         }
     }
 
     public function validFrais(Request $request) {
-        $id = $request->input('id');
-        $service = new FraisService();
-        if ($id) {
-            $unFrais = $service->getUnFrais($id);
-            $unFrais->datemodification = today(); // Définir la date au moment de la modification
-        } else {
-            $unFrais = new Frais();
+        try {
+            $id = $request->input('id');
+            $service = new FraisService();
+            if ($id) {
+                $unFrais = $service->getUnFrais($id);
+                $unFrais->datemodification = today(); // Définir la date au moment de la modification
+            } else {
+                $unFrais = new Frais();
+            }
+            $unFrais->id_etat = $request->input("etat");
+            $unFrais->anneemois = $request->input("annee-mois");
+            $unFrais->id_visiteur = session("id_visiteur");
+            $unFrais->nbjustificatifs = $request->input("nb-justificatifs");
+            $unFrais->montantvalide = $request->input("montant-validé");
+
+            $service->saveUnFrais($unFrais);
+
+            return redirect("/listerFrais");
+        } catch (Exception $exception) {
+            return view('error', compact('exception'));
         }
-        $unFrais->id_etat = $request->input("etat");
-        $unFrais->anneemois = $request->input("annee-mois");
-        $unFrais->id_visiteur = session("id_visiteur");
-        $unFrais->nbjustificatifs = $request->input("nb-justificatifs");
-        $unFrais->montantvalide = $request->input("montant-validé");
-
-        $service->saveUnFrais($unFrais);
-
-        return view('home');
     }
 
     public function editFrais($id) {
-        $service = new FraisService();
-        $unFrais = $service->getUnFrais($id);
+        try {
+            $service = new FraisService();
+            $unFrais = $service->getUnFrais($id);
 
-        return view('formFrais', compact('unFrais'));
+            return view('formFrais', compact('unFrais'));
+        } catch (Exception $exception) {
+            return view('error', compact('exception'));
+        }
     }
 }
