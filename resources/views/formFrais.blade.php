@@ -17,7 +17,11 @@
             <div class="form-group">
                 <label class="col-md-3">Montant saisi</label>
                 <div class="col-md-6">
-                    <input type="number" name="montant-saisi" class="form-control " min="0" step="0.01" value="" disabled>
+                    <input type="number" name="montant-saisi" class="form-control " min="0" step="0.01" value="" @if (!$unFrais->id_frais) disabled @endif>
+                    <div class="col-md-12 col-md-offset-3" style="margin-top: 8px;">
+                        <a href="" class="btn btn-info @if (!$unFrais->id_frais) disabled @endif">Frais hors forfait</a>
+                        <a href="" class="btn btn-info @if (!$unFrais->id_frais) disabled @endif">Frais au forfait</a>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
