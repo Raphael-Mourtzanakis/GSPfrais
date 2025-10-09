@@ -12,7 +12,7 @@ class FraisService
         $desFrais = Frais::query()
             ->select()
             ->where('id_visiteur', $id_visiteur)
-            /*->join("etat", "etat.id_etat","=","frais.id_etat")*/
+            ->join("etat", "etat.id_etat","=","frais.id_etat")
             ->orderBy('id_frais')
         ->get();
 
@@ -59,6 +59,7 @@ class FraisService
     public function getListEtat() {
         try {
             $etats = Frais::query()
+                ->from('etat')
                 ->orderBy('lib_etat')
                 ->get();
 

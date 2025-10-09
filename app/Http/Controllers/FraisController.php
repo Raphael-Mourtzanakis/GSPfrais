@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Frais;
-use App\Models\Etat;
 use Illuminate\Http\Request;
 use App\Services\FraisService;
 

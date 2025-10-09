@@ -40,7 +40,7 @@
                 <label class="col-md-3">État</label>
                 <div class="col-md-6">
                     <select class="form-select form-control" name="etat" required>
-                        <option value="">--- Sélectionnez un état ---</option>
+                        @if (!$unFrais->id_frais) <option value="">--- Sélectionnez un état ---</option>@endif <!-- Mettre une option vide que quand on créer un Frais}} -->
                         @foreach ($etats as $etat)
                             <option value="{{$etat->id_etat}}" @if ($unFrais->id_etat == $etat->id_etat) selected @endif>{{$etat->lib_etat}}</option>
                         @endforeach
