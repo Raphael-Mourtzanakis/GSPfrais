@@ -23,9 +23,9 @@
             <div class="form-group">
                 <label class="col-md-3">Montant saisi</label>
                 <div class="col-md-6">
-                    <input type="number" name="montant-saisi" class="form-control " min="0" step="0.01" value="" @if (!$unFrais->id_frais) disabled style="cursor: not-allowed" @endif>
+                    <input type="number" name="montant-saisi" class="form-control " min="0" step="0.01" value="" disabled style="cursor: not-allowed">
                     <div class="col-md-12 col-md-offset-3" style="margin-top: 8px; @if (!$unFrais->id_frais) cursor: not-allowed; @endif">
-                        <a href="" class="btn btn-info @if (!$unFrais->id_frais) disabled @endif">Frais hors forfait</a>
+                        <a href="{{ url('listerFraisHF/'.$unFrais->id_frais) }}" class="btn btn-info @if (!$unFrais->id_frais) disabled @endif">Frais hors forfait</a>
                         <a href="" class="btn btn-info @if (!$unFrais->id_frais) disabled @endif">Frais au forfait</a>
                     </div>
                 </div>

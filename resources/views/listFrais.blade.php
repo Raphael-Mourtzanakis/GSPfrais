@@ -10,11 +10,11 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
+            <th>Date de modification</th>
+            <th>Mois</th>
             <th>Titre</th>
             <th>État</th>
-            <th>Mois</th>
             <th>Nombre de justificatifs</th>
-            <th>Date de modification</th>
             <th>Montant validé</th>
             <th></th>
         </tr>
@@ -22,11 +22,11 @@
         <tbody>
         @foreach($desFrais as $ligne)
             <tr>
+                <td>{{ $ligne->datemodification }}</td>
+                <td>{{ $ligne->anneemois }}</td>
                 <td>{{ $ligne->titre }}</td>
                 <td>{{ $ligne->lib_etat }}</td>
-                <td>{{ $ligne->anneemois }}</td>
                 <td>{{ $ligne->nbjustificatifs }}</td>
-                <td>{{ $ligne->datemodification }}</td>
                 <td>{{ $ligne->montantvalide }} @if ($ligne->montantvalide ==! "") € @endif</td>
                 <td><a href="{{url("/editerFrais/".$ligne->id_frais)}}">Afficher</a></td>
             </tr>

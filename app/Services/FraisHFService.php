@@ -2,23 +2,32 @@
 
 namespace App\Services;
 
+use App\Models\FraisHF;
 use App\Models\Frais;
-use App\Models\Etat;
 use Illuminate\Database\QueryException;
 use App\Exceptions\UserException;
+use function Symfony\Component\String\s;
 
-class FraisService
+class FraisHFService
 {
-    public function getListFrais($id_visiteur) {
+    public function getListFraisHF($id_frais,$id_visiteur) {
         try {
-        $desFrais = Frais::query()
+        $desFraisHF = FraisHF::query()
             ->select()
-            ->where('id_visiteur', $id_visiteur)
-            ->join("etat", "etat.id_etat","=","frais.id_etat")
-            ->orderBy('datemodification','desc')->orderBy('id_frais','desc')
+            ->join('frais', 'frais.id_frais', '=', 'fraishorsforfait.id_frais')
+            ->where('fraishorsforfait.id_frais', $id_frais)
+            ->orderBy('fraishorsforfait.id_fraishorsforfait')
         ->get();
-
-        return $desFrais;
+        $visiteurDuFrais = Frais::query() // Pour mettre une erreur si le frais du frais hors forfait n'est pas de notre compte
+            ->select('id_visiteur')
+            ->where('id_frais', $id_frais);
+        if ($visiteurDuFrais->id_visiteur =! $id_visiteur) {
+            throw new UserException(
+                "Tu n'as pas accès à ce frais hors forfait"
+            );
+        } else {
+            return $desFraisHF;
+        }
         } catch (QueryException $exception) {
             $userMessage = "Erreur d'accès à la base de données";
             throw new UserException(
@@ -29,12 +38,12 @@ class FraisService
         }
     }
 
-    public function getUnFrais($id) {
+    public function getUnFraisHF($id) {
         try {
-        $unFrais = Frais::query()
+        $unFraisHF = FraisHF::query()
             ->find($id);
 
-        return $unFrais;
+        return $unFraisHF;
         } catch (QueryException $exception) {
             $userMessage = "Erreur d'accès à la base de données";
             throw new UserException(
@@ -45,9 +54,9 @@ class FraisService
         }
     }
 
-    public function saveUnFrais(Frais $unFrais) {
+    public function saveUnFraisHF(Frais $unFraisHF) {
         try {
-        $unFrais->save();
+        $unFraisHF->save();
         } catch (QueryException $exception) {
             $userMessage = "Erreur d'accès à la base de données";
             throw new UserException(
@@ -58,50 +67,24 @@ class FraisService
         }
     }
 
-    public function getListEtat() {
+    public function deleteFraisHF($id,$id_visiteur) {
         try {
-            $etats = Frais::query()
-                ->from('etat')
-                ->orderBy('lib_etat')
-                ->get();
-
-            return $etats;
-        } catch (QueryException $exception) {
-            $userMessage = "Erreur d'accès à la base de données";
-            throw new UserException(
-                $userMessage,
-                $exception->getMessage(),
-                $exception->getCode()
-            );
-        }
-    }
-
-    public function deleteFrais($id,$id_visiteur) {
-        try {
-            $unFrais = Frais::query()
+            $unFraisHF = FraisHF::query()
                 ->find($id);
-                //->where('id_visiteur', $id_visiteur); // Au cas où on n'est pas le visiteur du frais
-                if ($unFrais->id_visiteur =! $id_visiteur) {
+                if ($unFraisHF->id_visiteur =! $id_visiteur) {
                     throw new UserException(
                         "Tu n'as pas accès à ce frais"
                     );
                 } else {
-                    $unFrais->delete();
+                    $unFraisHF->delete();
                 }
         } catch (QueryException $exception) {
             if ($exception->getCode() == 23000) {
                 Session::put('erreur', $exception->getMessage());
                 return redirect(url('editerFrais/'.$id));
-                //$userMessage = "Impossible de supprimer une fiche avec des frais saisis";
             } else {
                 return view('error', compact('exception'));
-                //$userMessage = "Erreur d'accès à la base de données";
             }
-            /*throw new UserException(
-                $userMessage,
-                $exception->getMessage(),
-                $exception->getCode()
-            );*/
         }
     }
 }
