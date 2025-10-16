@@ -88,12 +88,19 @@ class FraisService
                 }
             $unFrais->delete();
         } catch (QueryException $exception) {
-            $userMessage = "Erreur d'accès à la base de données";
-            throw new UserException(
+            if ($exception->getCode() == 23000) {
+                Session::put('erreur', $exception->getMessage());
+                return redirect(url('editerFrais/'.$id));
+                //$userMessage = "Impossible de supprimer une fiche avec des frais saisis";
+            } else {
+                return view('error', compact('exception'));
+                //$userMessage = "Erreur d'accès à la base de données";
+            }
+            /*throw new UserException(
                 $userMessage,
                 $exception->getMessage(),
                 $exception->getCode()
-            );
+            );*/
         }
     }
 }

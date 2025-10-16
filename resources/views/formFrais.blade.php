@@ -75,6 +75,6 @@
     </form>
 
     @if(isset($erreur))
-        <div class="alert alert-danger" role="alert">{{ $erreur }}</div>
+        <div class="alert alert-danger from-error" role="alert">{{ $erreur }}</div>
     @endif
 @endsection

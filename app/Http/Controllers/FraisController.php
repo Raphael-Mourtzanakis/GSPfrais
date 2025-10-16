@@ -6,6 +6,7 @@ use App\Models\Frais;
 use App\Models\Etat;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Services\FraisService;
 
 class FraisController extends Controller {
@@ -70,7 +71,10 @@ class FraisController extends Controller {
             $etats = $service->getListEtat();
             $unFrais = $service->getUnFrais($id);
 
-            return view('formFrais', compact('unFrais', 'etats'));
+            $erreur = Session::get('erreur');
+            Session::remove('erreur');
+
+            return view('formFrais', compact('unFrais', 'etats', 'erreur'));
         } catch (Exception $exception) {
             return view('error', compact('exception'));
         }

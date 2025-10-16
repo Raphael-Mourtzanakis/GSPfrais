@@ -54,3 +54,8 @@ select, option, ::-webkit-inner-spin-button, input[type="month"]
     {
         float: right;
     }
+
+.from-error
+    {
+        margin-top: 15px;
+    }
