@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Frais;
 use App\Models\Etat;
+use Illuminate\Database\QueryException;
+use App\Exceptions\UserException;
 
 class FraisService
 {
@@ -13,7 +15,7 @@ class FraisService
             ->select()
             ->where('id_visiteur', $id_visiteur)
             ->join("etat", "etat.id_etat","=","frais.id_etat")
-            ->orderBy('id_frais')
+            ->orderBy('datemodification','desc')->orderBy('id_frais','desc')
         ->get();
 
         return $desFrais;
@@ -64,6 +66,27 @@ class FraisService
                 ->get();
 
             return $etats;
+        } catch (QueryException $exception) {
+            $userMessage = "Erreur d'accès à la base de données";
+            throw new UserException(
+                $userMessage,
+                $exception->getMessage(),
+                $exception->getCode()
+            );
+        }
+    }
+
+    public function deleteFrais($id,$id_visiteur) {
+        try {
+            $unFrais = Frais::query()
+                ->find($id);
+                //->where('id_visiteur', $id_visiteur); // Au cas où on n'est pas le visiteur du frais
+                if ($unFrais->id_visiteur =! $id_visiteur) {
+                    throw new UserException(
+                        "Tu n'as pas accès à ce frais"
+                    );
+                }
+            $unFrais->delete();
         } catch (QueryException $exception) {
             $userMessage = "Erreur d'accès à la base de données";
             throw new UserException(

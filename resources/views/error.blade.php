@@ -1,3 +1,9 @@
+@extends('layouts.master')
+
+@section('content')
+
+<div class="alert alert-danger">
+
 <p>Désolé une erreur technique empêche le bon fonctionnement du site !</p>
 
 @if (is_a($exception, '\App\Exceptions\UserException'))
@@ -14,3 +20,7 @@
     <p><b>File : </b>{{ $exception->getFile() }}</p>
     <p><b>Line : </b>{{ $exception->getLine() }}</p>
 @endif
+
+</div>
+
+@endsection

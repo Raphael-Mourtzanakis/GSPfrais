@@ -49,3 +49,8 @@ select, option, ::-webkit-inner-spin-button, input[type="month"]
     {
         cursor: pointer;
     }
+
+#suppr
+    {
+        float: right;
+    }

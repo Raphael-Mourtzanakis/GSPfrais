@@ -10,17 +10,19 @@
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>États</th>
-            <th>Années-Mois</th>
+            <th>Titre</th>
+            <th>État</th>
+            <th>Mois</th>
             <th>Nombre de justificatifs</th>
-            <th>Dates de modification</th>
-            <th>Montants validés</th>
+            <th>Date de modification</th>
+            <th>Montant validé</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         @foreach($desFrais as $ligne)
             <tr>
+                <td>{{ $ligne->titre }}</td>
                 <td>{{ $ligne->lib_etat }}</td>
                 <td>{{ $ligne->anneemois }}</td>
                 <td>{{ $ligne->nbjustificatifs }}</td>

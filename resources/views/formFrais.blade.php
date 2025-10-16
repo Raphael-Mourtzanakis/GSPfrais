@@ -9,6 +9,12 @@
             @if ($unFrais->id_frais) <input type="hidden" name="id" class="form-control" value="{{$unFrais->id_frais}}" required> @endif
 
             <div class="form-group">
+                <label class="col-md-3">Titre</label>
+                <div class="col-md-6">
+                    <input type="text" name="titre" class="form-control" value="{{$unFrais->titre}}" maxlength="50">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-3">Année-Mois</label>
                 <div class="col-md-6">
                     <input type="month" name="annee-mois" class="form-control" value="{{$unFrais->anneemois}}" required>
@@ -54,13 +60,17 @@
                     </button>
                     <button type="button" class="btn btn-secondary"
                             @if ($unFrais->id_frais) onclick="if (confirm ('Annuler la saisie ?')) window.location='{{ url('/listerFrais') }}';">
-                        @else onclick="if (confirm ('Annuler la saisie ?')) window.location='{{ url('/') }}';">
-                        @endif
+                            @else onclick="if (confirm ('Annuler la saisie ?')) window.location='{{ url('/') }}';">
+                            @endif
                         Annuler
                     </button>
+                    @if ($unFrais->id_frais)
+                        <a href="{{ url("/supprimerFrais/".$unFrais->id_frais) }}" id="suppr" class="btn btn-danger" onclick="if (confirm ('Supprimer cette fiche de frais ?'));">
+                            Supprimer
+                        </a>
+                    @endif
                 </div>
             </div>
-
         </div>
     </form>
 

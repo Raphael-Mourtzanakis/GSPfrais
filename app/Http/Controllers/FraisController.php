@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Frais;
 use App\Models\Etat;
+use Exception;
 use Illuminate\Http\Request;
 use App\Services\FraisService;
 
@@ -25,10 +26,8 @@ class FraisController extends Controller {
     public function addFrais() {
         try {
             $unFrais = new Frais();
-            //$service = new FraisService();
             $etats = [new Etat()];
-            $etats[0]->lib_etat = "Création en cours";
-            //$etats = $service->getListEtat();
+            $etats[0]->lib_etat = "Fiche créée, saisie en cours";
             $id_visiteur = session("id_visiteur");
             if (isset($id_visiteur)) {
                 return view('formFrais', compact('unFrais', 'etats'));
@@ -50,6 +49,7 @@ class FraisController extends Controller {
             } else {
                 $unFrais = new Frais();
             }
+            $unFrais->titre = $request->input("titre");
             $unFrais->id_etat = 2;
             $unFrais->anneemois = $request->input("annee-mois");
             $unFrais->id_visiteur = session("id_visiteur");
@@ -71,6 +71,18 @@ class FraisController extends Controller {
             $unFrais = $service->getUnFrais($id);
 
             return view('formFrais', compact('unFrais', 'etats'));
+        } catch (Exception $exception) {
+            return view('error', compact('exception'));
+        }
+    }
+
+    public function removeFrais($id) {
+        try {
+            $id_visiteur = session("id_visiteur");
+            $service = new FraisService();
+            $service->deleteFrais($id,$id_visiteur);
+
+            return redirect("/listerFrais");
         } catch (Exception $exception) {
             return view('error', compact('exception'));
         }
