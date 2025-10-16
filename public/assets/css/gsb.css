@@ -45,3 +45,7 @@ h1
         width: 4px;
         margin-left: 25px; margin-right: 25px;
     }
+select, option, ::-webkit-inner-spin-button, input[type="month"]
+    {
+        cursor: pointer;
+    }
